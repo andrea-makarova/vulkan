@@ -134,16 +134,17 @@ h3 { font-size: 18px; line-height: 24px; font-weight: 600; margin: 0; }
 /* Detail */
 .detail-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; }
 .q-card { background: #fff; border-radius: 8px; box-shadow: var(--shadow); padding: 24px; display: flex; gap: 16px; align-items: center; font-size: 18px; line-height: 26px; }
-.a-card { background: var(--green-25); border-left: 3px solid var(--green-400); border-radius: 8px; padding: 24px; display: flex; gap: 10px; font-size: 18px; line-height: 26px; color: var(--green-800); }
+.a-card { background: var(--green-25); border-left: 3px solid var(--green-400); border-radius: 0 8px 8px 0; padding: 24px; display: flex; align-items: flex-start; gap: 16px; font-size: 17px; line-height: 27px; color: var(--green-800); }
 .a-card > div:not(.ph) > :first-child { margin-top: 0; }
-.a-card .ph { position: relative; width: 48px; height: 48px; flex: none; }
-.a-card .ph img.photo { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-.a-card .ph img.mark { position: absolute; left: -4px; top: 30px; width: 16px; }
+.a-card > div:not(.ph) > :last-child { margin-bottom: 0; }
+.a-card p { margin: 0 0 16px; }
+.a-card .ph { position: relative; width: 40px; height: 40px; flex: none; }
+.a-card .ph img.photo { display: block; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.a-card .ph img.mark { position: absolute; left: -4px; bottom: -2px; top: auto; width: 14px; height: 14px; }
 .a-card ul { padding-left: 18px; }
 .a-card li { margin-bottom: 12px; }
-.helpful { display: flex; justify-content: flex-end; align-items: center; gap: 22px; color: var(--gray-600); }
-.helpful { font-size: 14px; gap: 14px; }
-.helpful .btn-blue { min-height: 36px; font-size: 14px; padding: 0 14px; border-radius: 4px; }
+.helpful { display: flex; justify-content: flex-end; align-items: center; gap: 16px; font-size: 14px; line-height: 20px; color: var(--gray-600); }
+.helpful .btn-blue { min-height: 40px; font-size: 15px; padding: 0 20px; border-radius: 4px; }
 .helpful .btn-blue.done { background: var(--green-500); border-color: var(--green-900); }
 .back { display: inline-flex; gap: 6px; align-items: center; font-weight: 700; cursor: pointer; }
 
@@ -742,22 +743,24 @@ mark { background: #fff1a8; color: inherit; border-radius: 2px; padding: 0 1px; 
 .hp-add-row .btn { min-height: 40px; padding: 0 14px; }
 
 /* Follow-up chat on question detail */
-.chat { background: #fff; border-radius: 8px; box-shadow: var(--shadow); padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-.chat-head { display: flex; gap: 14px; align-items: center; }
-.chat-head h2 { margin: 0; font-size: 20px; line-height: 28px; }
-.chat-ic { width: 44px; height: 44px; border-radius: 50%; background: var(--green-25); color: var(--green-800); display: inline-flex; align-items: center; justify-content: center; flex: none; }
-.chat-thread { display: flex; flex-direction: column; gap: 14px; }
-.msg { display: flex; gap: 10px; align-items: flex-end; max-width: 85%; }
+.chat { background: #fff; border-radius: 8px; box-shadow: var(--shadow); padding: 24px; display: flex; flex-direction: column; gap: 24px; }
+.chat-head { display: flex; gap: 16px; align-items: center; }
+.chat-head h2 { margin: 0; font-size: 20px; line-height: 26px; }
+.chat-head .muted { font-size: 14px; line-height: 20px; }
+.chat-ic { width: 40px; height: 40px; border-radius: 50%; background: var(--green-25); color: var(--green-800); display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.chat-thread { display: flex; flex-direction: column; gap: 16px; }
+.msg { display: flex; gap: 12px; align-items: flex-end; max-width: 80%; }
 .msg.me { align-self: flex-end; }
-.msg .photo { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none; }
+.msg .photo, .msg .ab-av { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex: none; }
 .msg .bub { border-radius: 12px; padding: 12px 16px; line-height: 24px; }
-.msg .bub small { display: block; margin-top: 4px; font-size: 13px; opacity: .7; }
+.msg .bub small { display: block; margin-top: 8px; font-size: 13px; line-height: 18px; color: var(--gray-500); }
 .msg.me .bub { background: var(--gray-25); border: 1px solid var(--gray-150); }
-.msg.ph .bub { background: var(--green-25); border-left: 3px solid var(--green-400); color: var(--green-800); }
-.chat-composer { display: flex; gap: 12px; align-items: flex-end; }
+.msg.ph .bub { background: var(--green-25); border: 1px solid var(--green-50); color: var(--green-800); }
+.msg.ph .bub small { color: var(--green-600); }
+.chat-composer { display: flex; gap: 12px; align-items: stretch; }
 .chat-composer textarea { flex: 1; resize: vertical; min-height: 56px; border: 1px solid var(--gray-150); border-radius: 8px; padding: 12px 14px; font: inherit; }
 .chat-composer.disabled textarea { background: var(--gray-25); }
-.chat-composer .btn { padding-left: 20px; padding-right: 20px; }
+.chat-composer .btn { align-self: stretch; min-width: 112px; padding-left: 20px; padding-right: 20px; }
 .chat-promo { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; background: var(--gray-25); border: 1px dashed var(--gray-150); border-radius: 8px; padding: 16px 20px; }
 .chat-promo > div:nth-child(2) { flex: 1; min-width: 220px; }
 .chat-note { font-size: 14px; }
@@ -767,7 +770,8 @@ mark { background: #fff1a8; color: inherit; border-radius: 2px; padding: 0 1px; 
   .chat-composer { flex-direction: column; align-items: stretch; }
 }
 
-.chat-announce { display: flex; gap: 10px; align-items: flex-start; background: var(--green-25); border-radius: 8px; padding: 12px 16px; color: var(--green-800); font-size: 15px; line-height: 22px; }
+.chat-announce { display: flex; gap: 12px; align-items: flex-start; background: var(--green-25); border-radius: 8px; padding: 12px 16px; color: var(--green-800); font-size: 14px; line-height: 21px; }
+.chat-announce svg { flex: none; margin-top: 1.5px; }
 .chat.private { position: relative; overflow: hidden; }
 .chat-blur { display: flex; flex-direction: column; gap: 14px; filter: blur(7px); opacity: .7; user-select: none; pointer-events: none; }
 .chat-veil { position: absolute; left: 0; right: 0; bottom: 0; top: 92px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 16px; background: rgba(255,255,255,.55); }
