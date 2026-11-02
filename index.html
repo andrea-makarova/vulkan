@@ -775,11 +775,16 @@ mark { background: #fff1a8; color: inherit; border-radius: 2px; padding: 0 1px; 
 .chat-veil { position: absolute; left: 0; right: 0; bottom: 0; top: 92px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 16px; background: rgba(255,255,255,.55); }
 
 .tag.own { background: var(--blue-25); color: var(--blue-700); border: 1px solid var(--blue-500); }
-.tile.own { border-left: 4px solid var(--blue-500); background: var(--blue-25); }
+.tile.own .body { gap: 12px; }
+.own-ans { font-size: 16px; line-height: 24px; color: var(--green-800); border-left: 2px solid var(--green-400); padding-left: 12px; }
+.own-ans u { cursor: pointer; }
+.own-foot { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px; line-height: 20px; color: var(--gray-600); }
+.own-foot > span { display: inline-flex; align-items: center; gap: 4px; }
+.own-foot .of-top { color: #7a5b00; font-weight: 700; }
+.own-foot .of-stats { margin-left: auto; display: inline-flex; gap: 16px; }
+.own-foot .of-stats span { display: inline-flex; align-items: center; gap: 4px; }
 .own-banner { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--blue-700); margin-bottom: -4px; }
 .own-banner > span:not(.tag) { color: var(--gray-600); font-size: 14px; }
-.tile.own .avatar.ab-av { display: grid; }
-@media (max-width: 820px) { .tile.own .avatar.ab-av { display: none; } }
 
 /* ---------- Products recommended by the pharmacist (carousel) ---------- */
 .reco { background: #fff; border: 1px solid var(--gray-100); border-radius: 8px; padding: 24px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
@@ -1472,6 +1477,22 @@ window.DATA = {
   const noMatch = (key) => `<div class="no-match">${ic('search', 28)}<div><b>No questions match “${esc(ui[key])}”</b><br><span class="muted">Try a different word, e.g. a medication, symptom or topic.</span></div><button class="btn btn-secondary" data-action="search-clear" data-k="${key}">Clear search</button></div>`;
   function tile(q, href, withAnswer = true, mine = false, term = '') {
     const own = !mine && isOwnPublic(q);
+    if (own) {
+      const answered = q.status !== 'waiting' && q.answer;
+      const ansText = answered ? (q.answer.length < 240 ? hl(q.answer, term) : hl(q.answer.slice(0, 240), term) + '... <u>Show more</u>') : '';
+      return `
+      <article class="tile own" data-go="${href}">
+        <div class="body">
+          <div class="own-banner"><span class="tag own">Your question</span><span>Published anonymously · ${esc(D.detail.date)}</span></div>
+          <div><div class="q-title">${hl(q.title, term)}</div><div class="q-text">${hl(q.text, term)}</div></div>
+          ${withAnswer ? (answered ? `<div class="own-ans">${ansText}</div>` : answerHtml(q, false, mine, term)) : ''}
+          <div class="own-foot">
+            ${q.top ? `<span class="of-top">${ic('award', 18)} Top</span>` : ''}${(q.tags || []).map((t) => `<span>${esc(t)}</span>`).join('')}
+            ${answered ? `<span class="of-stats"><span>${ic('thumb', 18)} ${q.likes ?? 1731}</span><span>${ic('eye', 18)} ${q.views ?? '12 221'}</span></span>` : ''}
+          </div>
+        </div>
+      </article>`;
+    }
     return `
       <article class="tile ${mine ? 'mine' : ''} ${own ? 'own' : ''}" data-go="${href}">
         ${mine || own ? `<span class="avatar ab-av lg">${initials()}</span>` : '<img class="avatar" src="data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiB2aWV3Qm94PSIwIDAgNDggNDgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJBZHZpc29yeSBhdmF0YXIiPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMF8xODIpIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iMjQiIGZpbGw9InVybCgjcGFpbnQwX2xpbmVhcl8wXzE4MikiLz4KPHBhdGggaWQ9InVzZXIiIGQ9Ik0yNC4wNTA1IDMyLjcwNzZDMTcuNDQzNiAzMi43MDc2IDEyLjAzNzggMjcuMzAxOSAxMi4wMzc4IDIwLjY5NDlDMTIuMDM3OCAxNC4wODc5IDE3LjQ0MzYgOC42ODIyMSAyNC4wNTA1IDguNjgyMjFDMzAuNjU3NSA4LjY4MjIxIDM2LjA2MzMgMTQuMDg3OSAzNi4wNjMzIDIwLjY5NDlDMzYuMDYzMyAyNy4zMDE5IDMwLjY1NzUgMzIuNzA3NiAyNC4wNTA1IDMyLjcwNzZaTTIxLjA0NzQgMzguMzEzNkgyNy4wNTM3QzM2Ljg2NDEgMzguMzEzNiA0NC44NzI2IDQ2LjMyMiA0NC44NzI2IDU2LjEzMjRDNDQuODcyNiA1Ny44MzQyIDQzLjU3MTIgNTkuMTM1NiA0MS44Njk0IDU5LjEzNTZINi4yMzE2OUM0LjUyOTg5IDU5LjEzNTYgMy4yMjg1MiA1Ny44MzQyIDMuMjI4NTIgNTYuMTMyNEMzLjIyODUyIDQ2LjMyMiAxMS4yMzcgMzguMzEzNiAyMS4wNDc0IDM4LjMxMzZaIiBmaWxsPSJ3aGl0ZSIvPgo8L2c+CjwvZz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0icGFpbnQwX2xpbmVhcl8wXzE4MiIgeDE9IjI0IiB5MT0iMCIgeDI9IjI0IiB5Mj0iNDgiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI0NBRjZENyIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNFRkM2QzYiLz4KPC9saW5lYXJHcmFkaWVudD4KPGNsaXBQYXRoIGlkPSJjbGlwMF8wXzE4MiI+CjxyZWN0IHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgcng9IjI0IiBmaWxsPSJ3aGl0ZSIvPgo8L2NsaXBQYXRoPgo8L2RlZnM+Cjwvc3ZnPgo=" alt="">'}
