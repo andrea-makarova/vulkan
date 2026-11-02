@@ -57,7 +57,9 @@ h3 { font-size: 18px; line-height: 24px; font-weight: 600; margin: 0; }
 .breadcrumbs { background: #fff; border-bottom: 1px solid var(--gray-50); height: 44px; display: flex; align-items: center; padding: 0 39px; gap: 8px; font-size: 14px; }
 .breadcrumbs a { color: var(--text); text-decoration: none; cursor: pointer; }
 .breadcrumbs a:hover { text-decoration: underline; }
-.breadcrumbs .chev { color: var(--gray-400); }
+.breadcrumbs .chev { color: var(--gray-400); display: inline-flex; align-items: center; line-height: 0; }
+.breadcrumbs .chev svg { display: block; }
+.breadcrumbs a, .breadcrumbs > span { display: inline-flex; align-items: center; line-height: 20px; }
 
 /* ---------- Layout ---------- */
 .layout { display: grid; grid-template-columns: 279px minmax(0, 1fr); gap: clamp(32px, 7.5vw, 130px); padding: 44px clamp(24px, 6vw, 105px) 120px clamp(24px, 4.3vw, 74px); max-width: 1728px; margin: 0 auto; }
