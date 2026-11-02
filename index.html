@@ -61,7 +61,8 @@ h3 { font-size: 18px; line-height: 24px; font-weight: 600; margin: 0; }
 
 /* ---------- Layout ---------- */
 .layout { display: grid; grid-template-columns: 279px minmax(0, 1fr); gap: clamp(32px, 7.5vw, 130px); padding: 44px clamp(24px, 6vw, 105px) 120px clamp(24px, 4.3vw, 74px); max-width: 1728px; margin: 0 auto; }
-.layout.narrow-main .main { max-width: 920px; margin-left: clamp(0px, 5.6vw, 97px); }
+.layout.narrow-main { gap: clamp(24px, 3.1vw, 40px); }
+.layout.narrow-main .main { max-width: 920px; margin-left: 0; }
 .main { max-width: 1140px; display: flex; flex-direction: column; gap: 48px; }
 
 /* My account sidebar */
