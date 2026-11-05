@@ -390,7 +390,8 @@ h3 { font-size: 18px; line-height: 24px; font-weight: 600; margin: 0; }
 
 /* drawer + bottom sheet variants of the modal */
 .overlay:has(.drawer) { padding: 0; justify-content: flex-start; }
-.modal.drawer { max-width: 340px; min-height: 100vh; border-radius: 0; padding-bottom: 24px; }
+.modal.drawer { max-width: 340px; height: 100vh; height: 100dvh; max-height: none; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; border-radius: 0; padding-bottom: 24px; }
+.modal.drawer .mm-head, .modal.drawer .acc-head { position: sticky; top: 0; z-index: 2; background: #fff; }
 .m-menu-head { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--gray-100); }
 .m-menu-user { display: flex; gap: 12px; align-items: center; padding: 16px; background: var(--green-25); color: var(--green-800); }
 .m-menu-grp { padding: 18px 16px 6px; }
