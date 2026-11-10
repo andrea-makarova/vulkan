@@ -1417,6 +1417,7 @@ window.DATA = {
     for (const el of els) {
       if (el.closest(I18N_SKIP_ATTR)) continue;
       for (const a of I18N_ATTRS) if (el.hasAttribute(a)) trAttr(el, a);
+      if (el.tagName === 'OPTION' && el.parentElement && el.parentElement.tagName === 'DATALIST') trAttr(el, 'value');
       if (!el.closest(I18N_SKIP)) trMixed(el);
     }
     const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
@@ -1456,6 +1457,12 @@ window.DATA = {
       else collect(v);
     }
   })(D);
+  let I18N_REV = null;
+  const fromLocal = (s) => {
+    if (!isCs() || !s) return s;
+    if (!I18N_REV) { I18N_REV = {}; [...D.allergyOptions, ...D.conditionOptions].forEach((o) => { const c = trCore(o); if (c) I18N_REV[c.toLowerCase()] = o; }); }
+    return I18N_REV[s.toLowerCase()] || s;
+  };
   const tD = (s) => (isCs() && I18N.d[s] !== undefined ? I18N.d[s] : s);
   function applyDataLang() { I18N_FIELDS.forEach(([o, k, en]) => { o[k] = isCs() ? I18N.d[en] : en; }); }
   function applyLangChrome() {
@@ -2653,7 +2660,7 @@ window.DATA = {
       case 'approval': S.approvals[el.dataset.k] = S.approvals[el.dataset.k] === false; save(); render(); break;
       case 'hp-inline-add': {
         if (!S.healthConsent) { toast('Give consent to the processing of health data first'); break; }
-        const kind = el.dataset.kind, inp = document.querySelector(`[data-inline="${kind}"]`), name = (inp?.value || '').trim();
+        const kind = el.dataset.kind, inp = document.querySelector(`[data-inline="${kind}"]`), name = fromLocal((inp?.value || '').trim());
         if (!name) { inp?.focus(); break; }
         const list = kind === 'allergy' ? S.health.allergies : S.health.conditions;
         if (list.some((x) => x.name.toLowerCase() === name.toLowerCase())) { toast(`${name} is already in your profile`); break; }
