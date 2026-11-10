@@ -2549,7 +2549,7 @@ window.DATA = {
           <div><div class="fu-meta">${esc(q.date || 'August 20, 2024')} • ${D.pharmacist.name}</div>${isRich ? q.answerHtml : `<p>${esc(q.answer)}</p><p>Have a nice day.<br>${D.pharmacist.name}</p>`}</div>
         </div>
         <div class="helpful"><span><b>${(q.likes ?? 1731) + (S.helpful[q.id] ? 1 : 0)}</b> clients found this answer helpful</span>
-          <button class="btn btn-primary ${S.helpful[q.id] ? 'done' : ''}" data-action="helpful" data-id="${q.id}">${ic('heart', 18)} ${S.helpful[q.id] ? 'Thank you!' : 'Answer was helpful'}</button></div>`;
+          <button class="btn btn-primary ${S.helpful[q.id] ? 'done' : ''}" data-action="helpful" data-id="${q.id}">${S.helpful[q.id] ? ic('heart', 18).replace(/<path /g, '<path fill="currentColor" ') : ic('heart', 18)} ${S.helpful[q.id] ? 'Thank you!' : 'Answer was helpful'}</button></div>`;
     const content = `
       <main class="main" style="gap:24px">
         ${inAccount ? backToDash() : ''}
