@@ -215,6 +215,7 @@ h3 { font-size: 18px; line-height: 24px; font-weight: 600; margin: 0; }
 .mm-item > svg:first-child { flex: none; color: var(--green-500); }
 .mm-item > span { flex: 1; }
 .mm-item .chev { color: var(--gray-500); }
+.mm-item.static { cursor: default; }
 .mm-item.red, .mm-item.red > svg:first-child { color: var(--red-500); }
 .acc-head { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 16px 10px; }
 .acc-head h2 { position: absolute; left: 60px; right: 60px; margin: 0; text-align: center; font-size: 20px; line-height: 26px; }
@@ -2305,7 +2306,7 @@ window.DATA = {
       </nav>`, 'drawer acc');
   }
   function mobileMenu() {
-    const item = (label, href, icon, cls = '', chev = false) => `<a class="mm-item ${cls}" data-go="${href}">${ic(icon, 26)}<span>${label}</span>${chev ? ic('chev', 18) : ''}</a>`;
+    const item = (label, href, icon, cls = '', chev = false) => `<a class="mm-item ${cls} ${href ? '' : 'static'}" ${href ? `data-go="${href}"` : ''}>${ic(icon, 26)}<span>${label}</span>${chev ? ic('chev', 18) : ''}</a>`;
     openModal(`
       <div class="mm-head">
         <button class="mm-av" data-action="${S.logged ? 'account-drawer' : 'login'}" aria-label="${S.logged ? 'My account' : 'Log in'}">${S.logged ? initials() : ic('user', 24)}</button>
@@ -2315,17 +2316,17 @@ window.DATA = {
       <label class="mm-search">${ic('search', 22)}<input type="search" placeholder="Enter product name, brand…" aria-label="Search"></label>
       <div class="m-menu-lang">${langSwitch()}</div>
       <div class="mm-grp">News & promotions</div>
-      ${item('Deals & discounts', '#/advisory', 'percent', 'red')}
-      ${item('Black Friday', '#/advisory', 'tag', 'red')}
-      ${item('Christmas', '#/advisory', 'tree', 'red')}
+      ${item('Deals & discounts', null, 'percent', 'red')}
+      ${item('Black Friday', null, 'tag', 'red')}
+      ${item('Christmas', null, 'tree', 'red')}
       <div class="mm-grp">E-shop offer</div>
-      ${item('Browse categories', '#/advisory', 'bag', '', true)}
-      ${item('E-prescription', '#/advisory', 'rx')}
-      ${item('Benefit card', '#/advisory', 'cardg')}
-      ${item('Ready for pickup', '#/advisory', 'pickup')}
-      ${item('Bjut by Dr. Max', '#/advisory', 'spray')}
-      ${item('Dr. Max Products', '#/advisory', 'heart')}
-      ${item('Prevention', '#/advisory', 'shield')}
+      ${item('Browse categories', null, 'bag', '', true)}
+      ${item('E-prescription', null, 'rx')}
+      ${item('Benefit card', null, 'cardg')}
+      ${item('Ready for pickup', null, 'pickup')}
+      ${item('Bjut by Dr. Max', null, 'spray')}
+      ${item('Dr. Max Products', null, 'heart')}
+      ${item('Prevention', null, 'shield')}
       ${item('Consultation — Ask a pharmacist', '#/advisory', 'chat')}`, 'drawer mm');
   }
   const shell = (crumbList, inner) => header() + crumbs(crumbList) + inner + footer();
